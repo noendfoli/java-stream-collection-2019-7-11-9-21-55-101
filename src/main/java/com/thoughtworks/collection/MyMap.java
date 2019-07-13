@@ -3,6 +3,7 @@ package com.thoughtworks.collection;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,8 @@ public class MyMap {
     }
 
     public List<String> mapLetter() {
-        throw new NotImplementedException();
+        return this.array.stream().map(num -> String.valueOf((char)(num+96))).collect(Collectors.toList());
+
     }
 
     public List<String> mapLetters() {
@@ -30,10 +32,10 @@ public class MyMap {
     }
 
     public List<Integer> sortFromBig() {
-        throw new NotImplementedException();
+        return this.array.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
 
     public List<Integer> sortFromSmall() {
-        throw new NotImplementedException();
+        return this.array.stream().sorted().collect(Collectors.toList());
     }
 }
