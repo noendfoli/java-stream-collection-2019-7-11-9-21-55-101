@@ -4,54 +4,34 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CollectionOperator {
     public List<Integer> getListByInterval(int left, int right) {
-        List<Integer> list = new ArrayList<>();
         if(left>right){
-            for(int i = left;i >= right;i--){
-                list.add(i);
-            }
+            return Stream.iterate(left,x->x-1).limit(left-right+1).collect(Collectors.toList());
         }else {
-            for(int i = left;i <= right;i++){
-                list.add(i);
-            }
+            return Stream.iterate(left,x->x+1).limit(right-left+1).collect(Collectors.toList());
         }
-        return list;
     }
 
     public List<Integer> getEvenListByIntervals(int left, int right) {
-        List<Integer> list = new ArrayList<>();
         if(left>right){
-            for(int i = left;i >= right;i--){
-                if(i%2 == 0){
-                    list.add(i);
-                }
-            }
+            return Stream.iterate(left,x->x-1).limit(left-right+1).filter(num -> num % 2 ==0).collect(Collectors.toList());
         }else {
-            for(int i = left;i <= right;i++){
-                if(i%2 == 0){
-                    list.add(i);
-                }
-            }
+            return Stream.iterate(left,x->x+1).limit(right-left+1).filter(num -> num % 2 ==0).collect(Collectors.toList());
         }
-        return list;
     }
 
     public List<Integer> popEvenElments(int[] array) {
-        List<Integer> list = new ArrayList<>();
-        for(int i = 0;i<array.length;i++){
-            if(i%2 == 0 && i>0){
-                list.add(i);
-            }
-        }
-        return  list;
+       return Arrays.stream(array).boxed().collect(Collectors.toList()).stream().filter(num -> num % 2 ==0).collect(Collectors.toList());
     }
 
     public int popLastElment(int[] array) {
-        return  array[array.length-1];
+        return Arrays.stream(array).boxed().collect(Collectors.toCollection(LinkedList::new)).getLast();
     }
 
     public List<Integer> popCommonElement(int[] firstArray, int[] secondArray) {

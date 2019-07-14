@@ -7,24 +7,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Add {
     public int getSumOfEvens(int leftBorder, int rightBorder) {
-        int start = 0;
         if(leftBorder>rightBorder){
-            for(int i = rightBorder ; i <= leftBorder ;i++){
-                if(i % 2 == 0){
-                    start += i;
-                }
-            }
-        }else{
-            for(int i = leftBorder ; i <= rightBorder ;i++){
-                if(i % 2 == 0){
-                    start += i;
-                }
-            }
+            return Stream.iterate(leftBorder, x->x-1).limit(leftBorder-rightBorder+1).filter(num -> num % 2 ==0).collect(Collectors.toList()).stream().reduce(0,(x,y)->x += y);
+        }else {
+            return Stream.iterate(leftBorder, x->x+1).limit(rightBorder-leftBorder+1).filter(num -> num % 2 ==0).collect(Collectors.toList()).stream().reduce(0,(x,y)->x += y);
         }
-        return  start;
 
     }
 
